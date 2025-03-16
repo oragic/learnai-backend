@@ -31,7 +31,14 @@ type DB struct {
 // - A pointer to the DB struct if the connection is successful and the ping passes.//+
 // - An error if the connection fails or the ping fails.//
 func New(ctx context.Context, config config.DB) (*DB, error) {
-	url := fmt.Sprint("")
+	url := fmt.Sprint("%s://%s:%s@%s:%s/%s?sslmode=disable",
+		config.Connection,
+		config.User,
+		config.Password,
+		config.Host,
+		config.Port,
+		config.Name,
+	)
 
 	db, err := pgxpool.New(ctx, url)
 	if err != nil {
