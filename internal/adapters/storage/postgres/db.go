@@ -4,6 +4,7 @@ import (
 	"context"
 	"embed"
 	"fmt"
+	"learnai/internal/adapters/config"
 
 	"github.com/Masterminds/squirrel"
 	"github.com/golang-migrate/migrate/v4"
@@ -24,12 +25,12 @@ type DB struct {
 // pings the database to ensure the connection is working, and returns a pointer to the DB struct.//+
 // //+
 // ctx: The context for the database connection.//+
-// config: The configuration for the database connection. The type of this parameter is "any" to allow for flexibility.//+
+// config: The configuration for the database connection//+
 // //+
 // Returns://+
 // - A pointer to the DB struct if the connection is successful and the ping passes.//+
 // - An error if the connection fails or the ping fails.//
-func New(ctx context.Context, config any) (*DB, error) {
+func New(ctx context.Context, config config.DB) (*DB, error) {
 	url := fmt.Sprint("")
 
 	db, err := pgxpool.New(ctx, url)
