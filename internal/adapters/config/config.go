@@ -17,7 +17,7 @@ type (
 )
 
 func New() (*Container, error) {
-	DB := &DB{
+	db := &DB{
 		Connection: os.Getenv("DB_CONNECTION"),
 		Host:       os.Getenv("DB_HOST"),
 		Port:       os.Getenv("DB_PORT"),
@@ -26,5 +26,5 @@ func New() (*Container, error) {
 		Name:       os.Getenv("DB_NAME"),
 	}
 
-	return &Container{DB: DB}, nil
+	return &Container{db}, nil
 }
