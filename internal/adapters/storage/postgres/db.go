@@ -76,11 +76,29 @@ func (db *DB) Migrate() error {
 	return nil
 }
 
+// ErrorCode extracts and returns the PostgreSQL error code from the given error.
+//
+// This function is intended to be used in conjunction with the DB struct's methods that interact with the PostgreSQL database.
+// It assumes that the provided error is of type *pgconn.PgError, which is the type of error returned by the pgx library when a PostgreSQL error occurs.
+//
+// Parameters:
+// - err: The error returned by a DB struct method. This error should be of type *pgconn.PgError.
+//
+// Returns:
+// - A string representing the PostgreSQL error code. If the provided error is not of type *pgconn.PgError, this function will panic.
 func (db *DB) ErrorCode(err error) string {
 	pgErr := err.(*pgconn.PgError)
 	return pgErr.Code
 }
 
+// Close closes the database connection pool.
+//
+// This function should be called when the DB instance is no longer needed to free up resources.
+// After calling this method, the DB instance should not be used for any further database operations.
+//
+// It is safe to call this method multiple times.
+//
+// No return value is expected.
 func (db *DB) Close() {
 	db.Pool.Close()
 }
