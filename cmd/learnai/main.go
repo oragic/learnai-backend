@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"learnai/internal/adapters/config"
 	"learnai/internal/adapters/storage/postgres"
 	"log/slog"
@@ -10,7 +9,6 @@ import (
 )
 
 func main() {
-	fmt.Println("Hello world!")
 	config, err := config.New()
 	if err != nil {
 		slog.Error("Error loading environment variables", "error", err)
@@ -18,6 +16,7 @@ func main() {
 	}
 
 	ctx := context.Background()
+
 	db, err := postgres.New(ctx, *config.DB)
 	if err != nil {
 		slog.Error("Error connecting to the database", "error", err)
