@@ -12,7 +12,7 @@ type FlashCardRepository interface {
 	DeleteFlashCard(ctx context.Context, id uint64) error
 }
 
-type Flashcard interface {
+type FlashcardService interface {
 	CreateFlashCard(ctx context.Context, flashcard *domain.Flashcard) (*domain.Flashcard, error)
 	GetFlashCard(ctx context.Context, id uint64) ([]domain.Flashcard, error)
 	GetFlashCardByID(ctx context.Context, id uint64) (*domain.Flashcard, error)
