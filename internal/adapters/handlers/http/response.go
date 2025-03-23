@@ -4,6 +4,7 @@ import (
 	"errors"
 	"learnai/internal/core/domain"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
@@ -20,6 +21,26 @@ func newResponse(success bool, message string, data any) response {
 		Success: success,
 		Message: message,
 		Data:    data,
+	}
+}
+
+type flashCardResponse struct {
+	ID        uint64    `json:"id" example:"1"`
+	UserID    uint64    `json:"userid" example:"1"`
+	AudioFile string    `json:"audiofile" example:"Technology Flash Card"`
+	Text      string    `json:"text" example:"Technology Flash Card"`
+	CreatedAt time.Time `json:"created_at" example:"1970-01-01T00:00:00Z"`
+	UpdatedAt time.Time `json:"updated_at" example:"1970-01-01T00:00:00Z"`
+}
+
+func newFlashCardResponse(flashCard *domain.Flashcard) flashCardResponse {
+	return flashCardResponse{
+		ID:        flashCard.ID,
+		UserID:    flashCard.UserID,
+		AudioFile: flashCard.AudioFile,
+		Text:      flashCard.Text,
+		CreatedAt: flashCard.CreatedAt,
+		UpdatedAt: flashCard.UpdateAt,
 	}
 }
 
