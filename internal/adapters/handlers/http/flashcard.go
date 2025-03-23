@@ -1,6 +1,7 @@
 package http
 
 import (
+	"learnai/internal/core/domain"
 	"learnai/internal/core/port"
 
 	"github.com/gin-gonic/gin"
@@ -21,6 +22,26 @@ type createRequest struct {
 
 func (h *FlashCardHandler) Create(ctx *gin.Context) {
 	var request createRequest
+	if err := ctx.ShouldBindJSON(&request); err != nil {
+		validationError(ctx, err)
+		return
+	}
+
+	user := domain.Flashcard{
+		AudioFile: request.AudioFile,
+		Text:      request.Text,
+	}
+
+	_, err := h.svc.CreateFlashCard(ctx, &user)
+	if err != nil {
+		handleError(ctx, err)
+		return
+	}
+
+	rsp := newFlashCardResponse(&user)
+
+	handleSuccess(ctx, rsp)
+
 }
 
 type getFlashCardRequest struct {
